@@ -1,0 +1,64 @@
+<idea-plugin version="2">
+  <id>de.espend.idea.android</id>
+  <name>Android Studio Plugin</name>
+  <version>0.0</version>
+  <vendor email="daniel@espendiller.net" url="http://espend.de">espend</vendor>
+
+  <description><![CDATA[
+    <h1>Android Studio Plugin</h1>
+
+
+    ]]>
+  </description>
+
+  <change-notes>
+      <![CDATA[
+
+<h2>0.0</h2>
+<ul>
+<li>Empty</li>
+</ul>
+
+      ]]>
+  </change-notes>
+
+  <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+  <idea-version since-build="131"/>
+
+  <!-- please see http://confluence.jetbrains.com/display/IDEADEV/Plugin+Compatibility+with+IntelliJ+Platform+Products
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+
+      <annotator language="JAVA" implementationClass="de.espend.idea.android.annotator.InflateViewAnnotator"/>
+      <annotator language="JAVA" implementationClass="de.espend.idea.android.annotator.InflateCastAnnotator"/>
+
+      <codeInsight.lineMarkerProvider language="JAVA" implementationClass="de.espend.idea.android.linemarker.FragmentRelatedFileLineMarker"/>
+      <codeInsight.lineMarkerProvider language="JAVA" implementationClass="de.espend.idea.android.linemarker.ViewInflateLineMarker"/>
+      <codeInsight.lineMarkerProvider language="JAVA" implementationClass="de.espend.idea.android.linemarker.InflateLayoutLineMarkerProvider"/>
+
+  </extensions>
+
+  <application-components>
+    <!-- Add your application components here -->
+  </application-components>
+
+  <depends>org.jetbrains.android</depends>
+
+  <project-components>
+    <!-- Add your project components here -->
+  </project-components>
+
+  <actions>
+      <action id="View Variables" class="de.espend.idea.android.action.generator.LocalViewAction" text="View Variables">
+          <add-to-group group-id="GenerateGroup" anchor="last" />
+      </action>
+      <action id="View Fields" class="de.espend.idea.android.action.generator.FieldViewInflateViewAction" text="View Fields">
+          <add-to-group group-id="GenerateGroup" anchor="last" />
+      </action>
+  </actions>
+
+</idea-plugin>
