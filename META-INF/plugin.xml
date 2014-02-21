@@ -59,6 +59,11 @@
       <action id="View Fields" class="de.espend.idea.android.action.generator.FieldViewInflateViewAction" text="View Fields">
           <add-to-group group-id="GenerateGroup" anchor="last" />
       </action>
+
+      <action id="Espend.Android.Menu" class="de.espend.idea.android.action.ExtractStringAction">
+          <add-to-group group-id="EditorPopupMenu"/>
+      </action>
+
   </actions>
 
 </idea-plugin>
