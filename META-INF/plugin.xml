@@ -1,12 +1,24 @@
 <idea-plugin version="2">
   <id>de.espend.idea.android</id>
-  <name>Android Studio Plugin</name>
-  <version>0.0</version>
+  <name>Android Studio Prettify</name>
+  <version>0.1</version>
   <vendor email="daniel@espendiller.net" url="http://espend.de">espend</vendor>
 
   <description><![CDATA[
-    <h1>Android Studio Plugin</h1>
+    <h1>Android Studio Prettify</h1>
 
+    <a href="https://github.com/Haehnchen/idea-android-studio-plugin/issues">Issues</a>
+    <br/>
+
+<h2>Features</h2>
+
+<ul>
+    <li>"Extract String resource" shortcut in context menu</li>
+    <li>LineMarker for view types</li>
+    <li>View cast checking annotator</li>
+    <li>Field and method variable generator for views</li>
+    <li>Related layout files for nested classes</li>
+</ul>
 
     ]]>
   </description>
@@ -14,9 +26,13 @@
   <change-notes>
       <![CDATA[
 
-<h2>0.0</h2>
+<h2>0.1</h2>
 <ul>
-<li>Empty</li>
+    <li>Add "Extract String resource" shortcut in context menu</li>
+    <li>Add LineMarker for view types</li>
+    <li>Add view cast checking annotator</li>
+    <li>Add field and method variable generator for views</li>
+    <li>Add related layout files for nested classes</li>
 </ul>
 
       ]]>
