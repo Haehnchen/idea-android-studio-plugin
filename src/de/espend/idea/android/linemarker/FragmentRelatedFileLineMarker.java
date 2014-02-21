@@ -33,7 +33,9 @@ public class FragmentRelatedFileLineMarker implements LineMarkerProvider {
             List<GotoRelatedItem> gotoRelatedItems = new ArrayList<GotoRelatedItem>();
             List<PsiFile> psiFiles = new ArrayList<PsiFile>();
 
-            if(psiElement instanceof PsiIdentifier && psiElement.getParent() instanceof PsiClass) {
+            // android studio provide line marker with xml targets only on root classes not on class inside classes like fragments
+            // we support all of them :)
+            if(psiElement instanceof PsiIdentifier && psiElement.getParent() instanceof PsiClass && !(psiElement.getParent().getParent() instanceof PsiFile)) {
 
                 // simple hack activity provide this on core
                 if(isFragmentClass((PsiClass) psiElement.getParent())) {
@@ -70,6 +72,7 @@ public class FragmentRelatedFileLineMarker implements LineMarkerProvider {
             return false;
         }
 
+        // @TODO: replace this one with instance check
         PsiClassType[] tests = extendsList.getReferencedTypes();
         for(PsiClassType psiClassType: tests) {
             if(psiClassType.getClassName().contains("Activity")) {
