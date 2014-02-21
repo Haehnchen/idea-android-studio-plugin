@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import de.espend.idea.android.action.write.InflateLocalVariableAction;
 import de.espend.idea.android.action.write.InflateThisExpressionAction;
 import de.espend.idea.android.utils.AndroidUtils;
+import de.espend.idea.android.utils.JavaPsiUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,6 +57,8 @@ public class InflateViewAnnotator implements Annotator {
             PsiMethodCallExpression psiMethodCallExpression = PsiTreeUtil.findChildOfType(psiLocalVariable, PsiMethodCallExpression.class);
             if(psiMethodCallExpression != null) {
                 PsiMethod psiMethod = psiMethodCallExpression.resolveMethod();
+
+                // @TODO: replace "inflate"; resolve method and check nethod calls
                 if(psiMethod != null && psiMethod.getName().equals("inflate")) {
                     PsiExpression[] expressions = psiMethodCallExpression.getArgumentList().getExpressions();
                     if(expressions.length > 0 && expressions[0] instanceof PsiReferenceExpression) {

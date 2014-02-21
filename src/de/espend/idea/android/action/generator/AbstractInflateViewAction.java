@@ -1,17 +1,15 @@
 package de.espend.idea.android.action.generator;
 
 import com.intellij.codeInsight.generation.actions.BaseGenerateAction;
-import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
+import com.intellij.patterns.PlatformPatterns;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiLocalVariable;
-import com.intellij.psi.impl.source.tree.java.PsiIdentifierImpl;
+import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtilBase;
-import com.intellij.psi.xml.XmlFile;
-import com.sun.deploy.ui.JavaTrayIcon;
 import de.espend.idea.android.annotator.InflateViewAnnotator;
 import icons.AndroidIcons;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +25,12 @@ abstract public class AbstractInflateViewAction extends BaseGenerateAction {
         int offset = editor.getCaretModel().getOffset();
         PsiElement psiElement = file.findElementAt(offset);
 
-        return psiElement instanceof PsiIdentifierImpl && psiElement.getParent() instanceof PsiLocalVariable;
+        if(!PlatformPatterns.psiElement().inside(PsiLocalVariable.class).accepts(psiElement)) {
+            return false;
+        }
+
+        PsiLocalVariable psiLocalVariable = PsiTreeUtil.getParentOfType(psiElement, PsiLocalVariable.class);
+        return InflateViewAnnotator.matchInflate(psiLocalVariable) != null;
     }
 
     @Override
@@ -43,7 +46,8 @@ abstract public class AbstractInflateViewAction extends BaseGenerateAction {
             return;
         }
 
-        InflateViewAnnotator.InflateContainer inflateContainer = InflateViewAnnotator.matchInflate(psiElement);
+        PsiLocalVariable psiLocalVariable = PsiTreeUtil.getParentOfType(psiElement, PsiLocalVariable.class);
+        InflateViewAnnotator.InflateContainer inflateContainer = InflateViewAnnotator.matchInflate(psiLocalVariable);
         if(inflateContainer == null) {
             return;
         }
