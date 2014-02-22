@@ -7,7 +7,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
-import com.intellij.psi.util.PsiElementFilter;
+import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import de.espend.idea.android.AndroidView;
@@ -61,23 +61,44 @@ public class InflateThisExpressionAction extends BaseIntentionAction {
                     return;
                 }
 
+                // collection class field
+                // check if we need to set them
                 PsiClass psiClass = PsiTreeUtil.getParentOfType(psiStatement, PsiClass.class);
                 Set<String> fieldSet = new HashSet<String>();
                 for(PsiField field: psiClass.getFields()) {
                     fieldSet.add(field.getName());
                 }
 
-                PsiElement[] PsiThisExpressions = PsiTreeUtil.collectElements(psiStatement.getParent(), new PsiElementFilter() {
+                // collect this.foo = "" and (this.)foo = ""
+                // collection already init variables
+                final Set<String> thisSet = new HashSet<String>();
+                PsiTreeUtil.processElements(psiStatement.getParent(), new PsiElementProcessor() {
+
                     @Override
-                    public boolean isAccepted(PsiElement element) {
-                        return element instanceof PsiThisExpression;
+                    public boolean execute(@NotNull PsiElement element) {
+
+                        if(element instanceof PsiThisExpression) {
+                            attachFieldName(element.getParent());
+                        } else if(element instanceof PsiAssignmentExpression) {
+                           attachFieldName(((PsiAssignmentExpression) element).getLExpression());
+                        }
+
+                        return true;
+                    }
+
+                    private void attachFieldName(PsiElement psiExpression) {
+
+                        if(!(psiExpression instanceof PsiReferenceExpression)) {
+                            return;
+                        }
+
+                        PsiElement psiField = ((PsiReferenceExpression) psiExpression).resolve();
+                        if(psiField instanceof PsiField) {
+                            thisSet.add(((PsiField) psiField).getName());
+                        }
                     }
                 });
 
-                Set<String> thisSet = new HashSet<String>();
-                for(PsiElement psiThisExpression: PsiThisExpressions) {
-                    thisSet.add(psiThisExpression.getParent().getText());
-                }
 
                 PsiElementFactory elementFactory = JavaPsiFacade.getElementFactory(psiStatement.getProject());
                 for (AndroidView v: androidViews) {
@@ -87,7 +108,7 @@ public class InflateThisExpressionAction extends BaseIntentionAction {
                         psiClass.add(elementFactory.createFieldFromText(sb, psiClass));
                     }
 
-                    if(!thisSet.contains("this." + v.getFieldName())) {
+                    if(!thisSet.contains(v.getFieldName())) {
 
                         String sb1;
                         if(variableName != null) {
