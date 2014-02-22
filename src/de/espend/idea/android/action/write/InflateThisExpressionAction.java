@@ -13,6 +13,7 @@ import com.intellij.util.IncorrectOperationException;
 import de.espend.idea.android.AndroidView;
 import de.espend.idea.android.utils.AndroidUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.List;
@@ -21,17 +22,26 @@ import java.util.Set;
 public class InflateThisExpressionAction extends BaseIntentionAction {
 
     final private PsiFile xmlFile;
-    final private PsiLocalVariable psiLocalVariable;
+    final private PsiElement psiElement;
+
+    @Nullable
+    private String variableName = null;
 
     public InflateThisExpressionAction(PsiLocalVariable psiLocalVariable, PsiFile xmlFile) {
         this.xmlFile = xmlFile;
-        this.psiLocalVariable = psiLocalVariable;
+        this.psiElement = psiLocalVariable;
+        this.variableName = psiLocalVariable.getName();
+    }
+
+    public InflateThisExpressionAction(PsiElement psiElement, PsiFile xmlFile) {
+        this.xmlFile = xmlFile;
+        this.psiElement = psiElement;
     }
 
     @NotNull
     @Override
     public String getFamilyName() {
-        return "Symfony2";
+        return "Android Studio Prettify";
     }
 
     @Override
@@ -46,7 +56,7 @@ public class InflateThisExpressionAction extends BaseIntentionAction {
             public void run() {
                 List<AndroidView> androidViews = AndroidUtils.getIDsFromXML(xmlFile);
 
-                PsiStatement psiStatement = PsiTreeUtil.getParentOfType(psiLocalVariable, PsiStatement.class);
+                PsiStatement psiStatement = PsiTreeUtil.getParentOfType(psiElement, PsiStatement.class);
                 if(psiStatement == null) {
                     return;
                 }
@@ -78,7 +88,15 @@ public class InflateThisExpressionAction extends BaseIntentionAction {
                     }
 
                     if(!thisSet.contains("this." + v.getFieldName())) {
-                        String sb1 = String.format("this.%s = (%s) %s.findViewById(R.id.%s);", v.getFieldName(), v.getName(), psiLocalVariable.getName(), v.getFieldName());
+
+                        String sb1;
+                        if(variableName != null) {
+                            sb1 = String.format("this.%s = (%s) %s.findViewById(R.id.%s);", v.getFieldName(), v.getName(), variableName, v.getFieldName());
+                        } else {
+                            sb1 = String.format("this.%s = (%s) findViewById(R.id.%s);", v.getFieldName(), v.getName(), v.getFieldName());
+                        }
+
+
                         PsiStatement statementFromText = elementFactory.createStatementFromText(sb1, null);
 
                         psiStatement.getParent().addAfter(statementFromText, psiStatement);

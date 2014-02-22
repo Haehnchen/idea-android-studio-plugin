@@ -69,10 +69,18 @@
   </project-components>
 
   <actions>
-      <action id="View Variables" class="de.espend.idea.android.action.generator.LocalViewAction" text="View Variables">
+
+      <action id="Android.Pretty.View.Inflate.Variables" class="de.espend.idea.android.action.generator.LocalViewAction" text="View Variables">
           <add-to-group group-id="GenerateGroup" anchor="last" />
       </action>
-      <action id="View Fields" class="de.espend.idea.android.action.generator.FieldViewInflateViewAction" text="View Fields">
+      <action id="Android.Pretty.View.Inflate.Fields" class="de.espend.idea.android.action.generator.FieldViewInflateViewAction" text="View Fields">
+          <add-to-group group-id="GenerateGroup" anchor="last" />
+      </action>
+
+      <action id="Android.Pretty.View.Activity.Variables" class="de.espend.idea.android.action.generator.ActivityViewMethodVariable" text="View Variables">
+          <add-to-group group-id="GenerateGroup" anchor="last" />
+      </action>
+      <action id="Android.Pretty.View.Activity.Field" class="de.espend.idea.android.action.generator.ActivityViewFieldVariable" text="View Fields">
           <add-to-group group-id="GenerateGroup" anchor="last" />
       </action>
 
