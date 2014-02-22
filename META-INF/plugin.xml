@@ -1,18 +1,19 @@
 <idea-plugin version="2">
   <id>de.espend.idea.android</id>
   <name>Android Studio Prettify</name>
-  <version>0.1</version>
+  <version>0.2</version>
   <vendor email="daniel@espendiller.net" url="http://espend.de">espend</vendor>
 
   <description><![CDATA[
     <h1>Android Studio Prettify</h1>
-
+    <br/>
     <a href="https://github.com/Haehnchen/idea-android-studio-plugin/issues">Issues</a>
     <br/>
 
 <h2>Features</h2>
 
 <ul>
+    <li>Generator for inflater and activity setContentView view variables</li>
     <li>"Extract String resource" shortcut in context menu</li>
     <li>LineMarker for view types</li>
     <li>View cast checking annotator</li>
@@ -25,6 +26,12 @@
 
   <change-notes>
       <![CDATA[
+
+<h2>0.2</h2>
+<ul>
+    <li>Implement support for activity setContentView</li>
+    <li>Optimize generator field detection</li>
+</ul>
 
 <h2>0.1</h2>
 <ul>
