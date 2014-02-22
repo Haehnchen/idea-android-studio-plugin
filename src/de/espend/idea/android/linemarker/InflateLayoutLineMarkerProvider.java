@@ -26,7 +26,7 @@ public class InflateLayoutLineMarkerProvider implements LineMarkerProvider {
 
             if(psiElement instanceof PsiMethodCallExpression) {
                 PsiMethod psiMethod = ((PsiCallExpression) psiElement).resolveMethod();
-                if(psiMethod != null && "inflate".equals(psiMethod.getName())) {
+                if(psiMethod != null && ("inflate".equals(psiMethod.getName()) || "setContentView".equals(psiMethod.getName()))) {
                     PsiExpressionList psiExpressionList = ((PsiCallExpression) psiElement).getArgumentList();
                     if(psiExpressionList != null) {
                         PsiExpression[] psiExpressions = psiExpressionList.getExpressions();
