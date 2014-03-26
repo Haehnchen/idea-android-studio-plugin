@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>de.espend.idea.android</id>
   <name>Android Studio Prettify</name>
-  <version>0.2</version>
+  <version>0.2.1</version>
   <vendor email="daniel@espendiller.net" url="http://espend.de">espend</vendor>
 
   <description><![CDATA[
@@ -26,6 +26,11 @@
 
   <change-notes>
       <![CDATA[
+
+<h2>0.2.1</h2>
+<ul>
+    <li>make code generator compatible with latest intellij build</li>
+</ul>
 
 <h2>0.2</h2>
 <ul>
