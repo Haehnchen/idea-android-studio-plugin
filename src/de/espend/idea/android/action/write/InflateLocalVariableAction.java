@@ -1,6 +1,5 @@
 package de.espend.idea.android.action.write;
 
-import com.intellij.codeInsight.actions.ReformatAndOptimizeImportsProcessor;
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
@@ -9,6 +8,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.util.PsiElementFilter;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.util.DocumentUtil;
 import com.intellij.util.IncorrectOperationException;
 import de.espend.idea.android.AndroidView;
 import de.espend.idea.android.utils.AndroidUtils;
@@ -51,13 +51,13 @@ public class InflateLocalVariableAction extends BaseIntentionAction {
 
     @Override
     public void invoke(@NotNull Project project, Editor editor, PsiFile psiFile) throws IncorrectOperationException {
-        ApplicationManager.getApplication().runWriteAction(new Runnable() {
+        DocumentUtil.writeInRunUndoTransparentAction(new Runnable() {
             @Override
             public void run() {
                 List<AndroidView> androidViews = AndroidUtils.getIDsFromXML(xmlFile);
 
                 PsiStatement psiStatement = PsiTreeUtil.getParentOfType(psiElement, PsiStatement.class);
-                if(psiStatement == null) {
+                if (psiStatement == null) {
                     return;
                 }
 
@@ -71,15 +71,15 @@ public class InflateLocalVariableAction extends BaseIntentionAction {
                 });
 
                 Set<String> variables = new HashSet<String>();
-                for(PsiElement localVariable: localVariables) {
+                for (PsiElement localVariable : localVariables) {
                     variables.add(((PsiLocalVariable) localVariable).getName());
                 }
 
-                for (AndroidView v: androidViews) {
-                    if(!variables.contains(v.getFieldName())) {
+                for (AndroidView v : androidViews) {
+                    if (!variables.contains(v.getFieldName())) {
                         String sb1;
 
-                        if(variableName != null) {
+                        if (variableName != null) {
                             sb1 = String.format("%s %s = (%s) %s.findViewById(R.id.%s);", v.getName(), v.getFieldName(), v.getName(), variableName, v.getFieldName());
                         } else {
                             sb1 = String.format("%s %s = (%s) findViewById(R.id.%s);", v.getName(), v.getFieldName(), v.getName(), v.getFieldName());

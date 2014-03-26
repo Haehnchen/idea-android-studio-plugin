@@ -1,8 +1,8 @@
 package de.espend.idea.android.action.write;
 
-import com.intellij.codeInsight.actions.ReformatAndOptimizeImportsProcessor;
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.util.DocumentUtil;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
@@ -51,7 +51,8 @@ public class InflateThisExpressionAction extends BaseIntentionAction {
 
     @Override
     public void invoke(@NotNull Project project, Editor editor, PsiFile psiFile) throws IncorrectOperationException {
-        ApplicationManager.getApplication().runWriteAction(new Runnable() {
+
+        DocumentUtil.writeInRunUndoTransparentAction(new Runnable() {
             @Override
             public void run() {
                 List<AndroidView> androidViews = AndroidUtils.getIDsFromXML(xmlFile);
