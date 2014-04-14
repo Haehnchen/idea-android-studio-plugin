@@ -1,8 +1,10 @@
 package de.espend.idea.android.utils;
 
 
+import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.PsiClassImplUtil;
+import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.search.PsiElementProcessor;
 import com.intellij.psi.util.PsiTreeUtil;
 import de.espend.idea.android.AndroidView;
@@ -135,6 +137,19 @@ public class AndroidViewUtil {
 
 
         return xmlFiles;
+    }
+
+    @NotNull
+    public static Icon getViewIcon(Project project, AndroidView androidView) {
+        JavaPsiFacade psiFacade = JavaPsiFacade.getInstance(project);
+        PsiClass psiClass = psiFacade.findClass(androidView.getName(), GlobalSearchScope.allScope(project));
+        if(psiClass == null) {
+            return AndroidIcons.Views.View;
+        }
+
+        Icon icon = AndroidViewUtil.getCoreIconWithExtends(androidView, psiClass);
+
+        return icon != null ? icon : AndroidIcons.Views.View;
     }
 
 }

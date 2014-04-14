@@ -68,6 +68,8 @@
       <codeInsight.lineMarkerProvider language="JAVA" implementationClass="de.espend.idea.android.linemarker.ViewInflateLineMarker"/>
       <codeInsight.lineMarkerProvider language="JAVA" implementationClass="de.espend.idea.android.linemarker.InflateLayoutLineMarkerProvider"/>
 
+      <gotoSymbolContributor implementation="de.espend.idea.android.symbol.AndroidSymbolContributor"/>
+
   </extensions>
 
   <application-components>

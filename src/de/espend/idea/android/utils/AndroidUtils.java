@@ -1,8 +1,9 @@
 package de.espend.idea.android.utils;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.vfs.VfsUtil;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
-import com.intellij.psi.search.EverythingGlobalScope;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlAttribute;
@@ -38,6 +39,36 @@ public class AndroidUtils {
         }
 
         return foundFiles[0];
+    }
+
+    public static List<AndroidView> getProjectViews(Project project) {
+
+        List<AndroidView> androidViews = new ArrayList<AndroidView>();
+        for(PsiFile psiFile: getLayoutFiles(project)) {
+            androidViews.addAll(getIDsFromXML(psiFile));
+        }
+
+        return androidViews;
+    }
+
+    public static List<PsiFile> getLayoutFiles(Project project) {
+
+        List<PsiFile> psiFileList = new ArrayList<PsiFile>();
+
+        for (VirtualFile virtualFile : FilenameIndex.getAllFilesByExt(project, "xml")) {
+            VirtualFile parent = virtualFile.getParent();
+            if (parent != null && "layout".equals(parent.getName())) {
+                String relative = VfsUtil.getRelativePath(virtualFile, project.getBaseDir(), '/');
+                if (relative != null) {
+                    PsiFile psiFile = PsiManager.getInstance(project).findFile(virtualFile);
+                    if (psiFile != null) {
+                        psiFileList.add(psiFile);
+                    }
+                }
+            }
+        }
+
+        return psiFileList;
     }
 
     @Nullable
