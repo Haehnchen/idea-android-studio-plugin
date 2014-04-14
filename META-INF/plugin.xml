@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>de.espend.idea.android</id>
   <name>Android Studio Prettify</name>
-  <version>0.2.1</version>
+  <version>0.3</version>
   <vendor email="daniel@espendiller.net" url="http://espend.de">espend</vendor>
 
   <description><![CDATA[
@@ -19,6 +19,7 @@
     <li>View cast checking annotator</li>
     <li>Field and method variable generator for views</li>
     <li>Related layout files for nested classes</li>
+    <li>Symbol search for layout id in xml files</li>
 </ul>
 
     ]]>
@@ -26,6 +27,11 @@
 
   <change-notes>
       <![CDATA[
+
+<h2>0.3</h2>
+<ul>
+    <li>Add symbol search for layout ids in xml</li>
+</ul>
 
 <h2>0.2.1</h2>
 <ul>
