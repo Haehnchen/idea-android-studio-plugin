@@ -80,9 +80,9 @@ public class InflateLocalVariableAction extends BaseIntentionAction {
                         String sb1;
 
                         if (variableName != null) {
-                            sb1 = String.format("%s %s = (%s) %s.findViewById(R.id.%s);", v.getName(), v.getFieldName(), v.getName(), variableName, v.getFieldName());
+                            sb1 = String.format("%s %s = (%s) %s.findViewById(%s);", v.getName(), v.getFieldName(), v.getName(), variableName, v.getId());
                         } else {
-                            sb1 = String.format("%s %s = (%s) findViewById(R.id.%s);", v.getName(), v.getFieldName(), v.getName(), v.getFieldName());
+                            sb1 = String.format("%s %s = (%s) findViewById(%s);", v.getName(), v.getFieldName(), v.getName(), v.getId());
                         }
 
                         PsiStatement statementFromText = elementFactory.createStatementFromText(sb1, null);

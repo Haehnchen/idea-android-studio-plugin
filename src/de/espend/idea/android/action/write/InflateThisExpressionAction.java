@@ -113,9 +113,9 @@ public class InflateThisExpressionAction extends BaseIntentionAction {
 
                         String sb1;
                         if(variableName != null) {
-                            sb1 = String.format("this.%s = (%s) %s.findViewById(R.id.%s);", v.getFieldName(), v.getName(), variableName, v.getFieldName());
+                            sb1 = String.format("this.%s = (%s) %s.findViewById(%s);", v.getFieldName(), v.getName(), variableName, v.getId());
                         } else {
-                            sb1 = String.format("this.%s = (%s) findViewById(R.id.%s);", v.getFieldName(), v.getName(), v.getFieldName());
+                            sb1 = String.format("this.%s = (%s) findViewById(%s);", v.getFieldName(), v.getName(), v.getId());
                         }
 
 

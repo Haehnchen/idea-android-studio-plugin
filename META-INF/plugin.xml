@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>de.espend.idea.android</id>
   <name>Android Studio Prettify</name>
-  <version>0.3</version>
+  <version>0.3.1</version>
   <vendor email="daniel@espendiller.net" url="http://espend.de">espend</vendor>
 
   <description><![CDATA[
@@ -27,6 +27,11 @@
 
   <change-notes>
       <![CDATA[
+
+<h2>0.3.1</h2>
+<ul>
+    <li>Fix: Omits underscores in view ID <a href="https://github.com/Haehnchen/idea-android-studio-plugin/issues/1">#1</a> </li>
+</ul>
 
 <h2>0.3</h2>
 <ul>
