@@ -1,5 +1,8 @@
 Android Studio Prettify
 ==========================
+[![Version](http://phpstorm.espend.de/badge/7405/version)](https://plugins.jetbrains.com/plugin/7405)
+[![Downloads](http://phpstorm.espend.de/badge/7405/downloads)](https://plugins.jetbrains.com/plugin/7405)
+[![Downloads last month](http://phpstorm.espend.de/badge/7405/last-month)](https://plugins.jetbrains.com/plugin/7405)
 
 IntelliJ IDEA / Android Studio plugin with some tools and usability improvements
 
