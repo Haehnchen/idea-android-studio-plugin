@@ -9,6 +9,9 @@ import com.intellij.psi.search.GlobalSearchScope;
 import org.jetbrains.annotations.Nullable;
 
 public class JavaPsiUtil {
+    
+    private JavaPsiUtil() {
+    }
 
     @Nullable
     public static PsiClass getClass(Project project, String qualifiedClassName) {
