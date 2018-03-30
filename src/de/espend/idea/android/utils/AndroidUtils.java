@@ -18,6 +18,9 @@ import java.util.List;
 
 public class AndroidUtils {
 
+    private AndroidUtils() {
+    }
+    
     @Nullable
     public static PsiFile findXmlResource(@Nullable PsiReferenceExpression referenceExpression) {
         if (referenceExpression == null) return null;
