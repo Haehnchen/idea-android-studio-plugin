@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AndroidViewUtil {
+    
+    private AndroidViewUtil() {
+    }
 
     public static Icon getCoreIconWithExtends(AndroidView view, PsiClass psiClass) {
 
